@@ -78,7 +78,12 @@ function logToolError(toolName: string, error: string) {
 // ==================== SCREENSHOT DIRECTORY ====================
 
 const screenshotsDir = "./playwright/screenshots";
-await fs.mkdir(screenshotsDir, { recursive: true });
+// await fs.mkdir(screenshotsDir, { recursive: true });
+
+async function ensureReady() {
+  await fs.mkdir(screenshotsDir, { recursive: true });
+  await initializeBrowser();
+}
 
 // ==================== GLOBAL BROWSER STATE ====================
 
@@ -131,7 +136,7 @@ export const openURL = tool({
     logToolStart(toolName, { url });
 
     try {
-      await initializeBrowser();
+      await ensureReady();
       if (!page) throw new Error("Page not initialized");
 
       await page.goto(url, { waitUntil: "domcontentloaded" });
@@ -159,7 +164,7 @@ export const takeScreenshot = tool({
     logToolStart(toolName, {});
 
     try {
-      await initializeBrowser();
+      await ensureReady();
       if (!page) throw new Error("Page not initialized");
 
       const shot = await safeScreenshot(page, "manual");
@@ -188,7 +193,7 @@ export const typeInField = tool({
     logToolStart(toolName, { field, text });
 
     try {
-      await initializeBrowser();
+      await ensureReady();
       if (!page) throw new Error("Page not initialized");
 
       const f = field.trim();
@@ -302,7 +307,7 @@ export const clickByText = tool({
     logToolStart(toolName, { text });
 
     try {
-      await initializeBrowser();
+      await ensureReady();
       if (!page) throw new Error("Page not initialized");
 
       const candidates = [
@@ -354,7 +359,7 @@ export const pressEnter = tool({
     logToolStart(toolName, {});
 
     try {
-      await initializeBrowser();
+      await ensureReady();
       if (!page) throw new Error("Page not initialized");
 
       const oldUrl = page.url();
@@ -385,7 +390,7 @@ export const scrollPage = tool({
     logToolStart(toolName, { y });
 
     try {
-      await initializeBrowser();
+      await ensureReady();
       if (!page) throw new Error("Page not initialized");
 
       await page.mouse.wheel(0, y);
@@ -415,7 +420,7 @@ export const clickAt = tool({
     logToolStart(toolName, { x, y });
 
     try {
-      await initializeBrowser();
+      await ensureReady();
       if (!page) throw new Error("Page not initialized");
 
       await page.mouse.click(x, y);
@@ -470,7 +475,7 @@ export const getResponseData = tool({
     logToolStart(toolName, {});
 
     try {
-      await initializeBrowser();
+      await ensureReady();
       if (!page) throw new Error("Page not initialized");
 
       const title = await page.title();
@@ -500,7 +505,7 @@ export const waitForHuman = tool({
     logToolStart(toolName, {});
 
     try {
-      await initializeBrowser();
+      await ensureReady();
       if (!page) throw new Error("Page not initialized");
       const p = page;
 

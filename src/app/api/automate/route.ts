@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 import { NextRequest, NextResponse } from "next/server";
 import { run } from "@openai/agents";
 import { RateLimiterMemory } from "rate-limiter-flexible";
@@ -7,6 +10,8 @@ import {
   resetExecutionLog,
   getExecutionLog,
 } from "@/lib/agent";
+
+
 
 // 1 request per IP per 24 hours
 const rateLimiter = new RateLimiterMemory({
