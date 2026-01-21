@@ -5,12 +5,19 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "install-browsers": "npx playwright install chromium"
   },
   "dependencies": {
+    "@openai/agents": "^0.4.1",
+    "framer-motion": "^12.27.1",
+    "lucide-react": "^0.562.0",
     "next": "16.1.4",
+    "playwright": "^1.57.0",
+    "rate-limiter-flexible": "^9.0.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
